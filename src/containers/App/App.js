@@ -6,6 +6,7 @@ import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@materi
 function App() {
   const [ isEditable, setEditable ] = React.useState(false);
   const [ title, setTitle ] = React.useState('');
+  const [ text, setText ] = React.useState('');
 
   const classes = useStyles();
 
@@ -14,8 +15,11 @@ function App() {
   }
 
   const handleTitleBlur = (event) => {
-    console.log('title blur', event.target.innerText);
     setTitle(event.target.innerText);
+  }
+
+  const handleTextBlur = (event) => {
+    setText(event.target.innerText);
   }
 
   return (
@@ -31,7 +35,11 @@ function App() {
         </Paper>
 
         <Paper className={classes.document}>
-          
+          <Typography contentEditable={isEditable}
+            className={classes.text}
+            onBlur={handleTextBlur}>
+            {text}
+          </Typography>
         </Paper>
       </div>
 
@@ -77,8 +85,12 @@ const useStyles = makeStyles((theme) => {
     },
     document: {
       marginTop: 20,
+      padding: 10,
       flexBasis: 'auto',
       flexGrow: 1,
+    },
+    text: {
+
     },
     fab: {
       position: 'fixed',
