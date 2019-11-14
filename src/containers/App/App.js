@@ -1,17 +1,23 @@
 import React from 'react';
-import { Paper, Typography, createMuiTheme } from '@material-ui/core';
-import { makeStyles, ThemeProvider } from '@material-ui/styles';
-
-const theme = createMuiTheme();
+import { Paper, Typography, Fab } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
 
 function App() {
+  const [ isEditable, setEditable ] = React.useState(false);
+
   const classes = useStyles();
+
+  const handleEditClick = () => {
+    setEditable((previousValue) => !previousValue);
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.container}>
 
         <Paper>
-          <Typography className={classes.title}>
+          <Typography contentEditable={isEditable} className={classes.title}>
             El título
           </Typography>
         </Paper>
@@ -20,6 +26,12 @@ function App() {
           
         </Paper>
       </div>
+
+      <Fab color="secondary" aria-label="edit" className={classes.fab}
+        onClick={handleEditClick}>
+        {isEditable && <EyeIcon />}
+        {!isEditable && <EditIcon />}
+      </Fab>
     </div>
   );
 }
@@ -58,6 +70,11 @@ const useStyles = makeStyles((theme) => {
       flexBasis: 'auto',
       flexGrow: 1,
     },
+    fab: {
+      position: 'fixed',
+      right: 40,
+      bottom: 40,
+    }
   }
 });
 
