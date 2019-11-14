@@ -1,8 +1,9 @@
 import React from 'react';
-import { Paper, Typography, Fab } from '@material-ui/core';
+import { Paper, Fab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
 import { Word } from '../../components/Word/Word';
+import ContentEditable from 'react-contenteditable';
 
 function App() {
   const [ isEditable, setEditable ] = React.useState(false);
@@ -16,7 +17,7 @@ function App() {
     setEditable((previousValue) => !previousValue);
   }
 
-  const handleTitleBlur = (event) => {
+  const handleTitleChange = (event) => {
     setTitle(event.target.innerText);
   }
 
@@ -33,25 +34,33 @@ function App() {
     });
   }
 
+  const handleTextChange = (event) => {
+    setText(event.target.value);
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.container}>
 
         <Paper>
-          <Typography contentEditable={isEditable}
+          <ContentEditable
+            html={title || 'Untitled document'}
+            disabled={!isEditable}
+            onChange={handleTitleChange}
+            tagName='p'
             className={classes.title + ' ' + (!title && classes.empty)}
-            onBlur={handleTitleBlur}>
-            {title || 'Untitled document'}
-          </Typography>
+            />
         </Paper>
 
         <Paper className={classes.document}>
           {words.map(word => <Word>{word}</Word>)}
-          <Typography contentEditable={isEditable}
-            className={classes.text}
-            onBlur={handleTextBlur}>
-            {text}
-          </Typography>
+          <ContentEditable
+            html={text}
+            disabled={!isEditable}
+            onChange={handleTextChange}
+            onBlur={handleTextBlur}
+            tagName='p'
+            />
         </Paper>
       </div>
 
