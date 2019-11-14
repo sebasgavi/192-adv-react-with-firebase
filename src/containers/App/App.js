@@ -4,12 +4,13 @@ import { makeStyles } from '@material-ui/styles';
 import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
 import { Word } from '../../components/Word/Word';
 import ContentEditable from 'react-contenteditable';
+import { fb } from '../../utils/firebase';
 
 function App() {
-  const [ isEditable, setEditable ] = React.useState(false);
+  const [ isEditable, setEditable ] = React.useState(true);
   const [ title, setTitle ] = React.useState('');
   const [ text, setText ] = React.useState('');
-  const [ words, setWords ] = React.useState([]);
+  const [ words, setWords ] = React.useState(['una', 'dos']);
 
   const classes = useStyles();
 
@@ -18,7 +19,12 @@ function App() {
   }
 
   const handleTitleChange = (event) => {
-    setTitle(event.target.innerText);
+    let title = event.target.value;
+    setTitle(title);
+    let db = fb.firestore();
+    db.collection('titles').doc('LA').set({
+      title: title,
+    });
   }
 
   const handleTextBlur = (event) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Menu } from '@material-ui/core';
+import { Menu, Button } from '@material-ui/core';
 
 export const Word = (props) => {
   const [ anchorEl, setAnchorEl ] = React.useState(null);
@@ -27,7 +27,9 @@ export const Word = (props) => {
         vertical: 'top',
         horizontal: 'center',
       }}>
-hola
+      <Button>
+        Bold
+      </Button>
     </Menu>
   </span>);
 }
