@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 export const Word = (props) => {
   const classes = useStyles();
-  return (<span>
+  return (<span className={classes.root}>
     {props.children}
   </span>);
 }
@@ -11,7 +11,7 @@ export const Word = (props) => {
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-
+      marginLeft: 5,
     },
   }
 });

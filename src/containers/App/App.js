@@ -53,7 +53,7 @@ function App() {
         </Paper>
 
         <Paper className={classes.document}>
-          {words.map(word => <Word>{word}</Word>)}
+          {words.map((word, index) => <Word key={index+word}>{word}</Word>)}
           <ContentEditable
             html={text}
             disabled={!isEditable}
@@ -80,6 +80,10 @@ const useStyles = makeStyles((theme) => {
       },
       '*': {
         boxSizing: 'border-box',
+      },
+      p: {
+        fontFamily: 'sans-serif',
+        margin: 0,
       },
     },
     root: {
