@@ -2,11 +2,13 @@ import React from 'react';
 import { Paper, Typography, Fab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
+import { Word } from '../../components/Word/Word';
 
 function App() {
   const [ isEditable, setEditable ] = React.useState(false);
   const [ title, setTitle ] = React.useState('');
   const [ text, setText ] = React.useState('');
+  const [ words, setWords ] = React.useState([]);
 
   const classes = useStyles();
 
@@ -19,7 +21,16 @@ function App() {
   }
 
   const handleTextBlur = (event) => {
-    setText(event.target.innerText);
+    let text = event.target.innerText;
+    setText('');
+
+    // set words concatenating previous words with splitted string from dom element.
+    setWords((prevValue) => {
+      return [
+        ...prevValue,
+        ...text.split(' '),
+      ];
+    });
   }
 
   return (
@@ -35,6 +46,7 @@ function App() {
         </Paper>
 
         <Paper className={classes.document}>
+          {words.map(word => <Word>{word}</Word>)}
           <Typography contentEditable={isEditable}
             className={classes.text}
             onBlur={handleTextBlur}>
