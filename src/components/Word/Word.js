@@ -1,10 +1,34 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import { Menu } from '@material-ui/core';
 
 export const Word = (props) => {
+  const [ anchorEl, setAnchorEl ] = React.useState(null);
   const classes = useStyles();
-  return (<span className={classes.root}>
+  const handleClick = (event) => {
+    setAnchorEl(event.target);
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+  return (<span className={classes.root}
+    onClick={handleClick}>
     {props.children}
+    <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}>
+hola
+    </Menu>
   </span>);
 }
 
