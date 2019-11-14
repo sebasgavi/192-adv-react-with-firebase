@@ -5,6 +5,7 @@ import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@materi
 
 function App() {
   const [ isEditable, setEditable ] = React.useState(false);
+  const [ title, setTitle ] = React.useState('');
 
   const classes = useStyles();
 
@@ -12,13 +13,20 @@ function App() {
     setEditable((previousValue) => !previousValue);
   }
 
+  const handleTitleBlur = (event) => {
+    console.log('title blur', event.target.innerText);
+    setTitle(event.target.innerText);
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.container}>
 
         <Paper>
-          <Typography contentEditable={isEditable} className={classes.title}>
-            El título
+          <Typography contentEditable={isEditable}
+            className={classes.title + ' ' + (!title && classes.empty)}
+            onBlur={handleTitleBlur}>
+            {title || 'Untitled document'}
           </Typography>
         </Paper>
 
@@ -29,8 +37,7 @@ function App() {
 
       <Fab color="secondary" aria-label="edit" className={classes.fab}
         onClick={handleEditClick}>
-        {isEditable && <EyeIcon />}
-        {!isEditable && <EditIcon />}
+        {isEditable ? <EyeIcon /> : <EditIcon />}
       </Fab>
     </div>
   );
@@ -65,6 +72,9 @@ const useStyles = makeStyles((theme) => {
       fontWeight: 'bold',
       padding: '6px 8px',
     },
+    empty: {
+      color: 'gray',
+    },
     document: {
       marginTop: 20,
       flexBasis: 'auto',
@@ -74,7 +84,7 @@ const useStyles = makeStyles((theme) => {
       position: 'fixed',
       right: 40,
       bottom: 40,
-    }
+    },
   }
 });
 
