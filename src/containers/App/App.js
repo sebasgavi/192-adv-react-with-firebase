@@ -21,11 +21,26 @@ function App() {
   const handleTitleChange = (event) => {
     let title = event.target.value;
     setTitle(title);
+  }
+
+  const handleTitleBlur = (event) => {
+    let title = event.target.innerText;
     let db = fb.firestore();
     db.collection('titles').doc('LA').set({
       title: title,
     });
   }
+
+  React.useEffect(() => {
+    let db = fb.firestore();
+    let doc = db.collection('titles').doc('LA');
+    let observer = doc.onSnapshot(docSnapshot => {
+      setTitle(docSnapshot.data().title);
+      // ...
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }, []);
 
   const handleTextBlur = (event) => {
     let text = event.target.innerText;
@@ -53,6 +68,7 @@ function App() {
             html={title || 'Untitled document'}
             disabled={!isEditable}
             onChange={handleTitleChange}
+            onBlur={handleTitleBlur}
             tagName='p'
             className={classes.title + ' ' + (!title && classes.empty)}
             />
