@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { fb } from '../../utils/firebase';
 
 const Register = () => {
   const classes = useStyles();
@@ -14,7 +15,14 @@ const Register = () => {
     const fullname = event.target.fullname.value;
 
     if(password === passwordConfirmation){
-
+      fb.auth().createUserWithEmailAndPassword(email, password)
+        .then(function(info){
+          console.log(info)
+        })
+        .catch(function(error) {
+          var errorMessage = error.message;
+          setError(errorMessage);
+        });
     } else {
       setError('Wrong password confirmation.');
     }
