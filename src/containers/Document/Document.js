@@ -3,8 +3,8 @@ import { Paper, Fab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
 import ContentEditable from 'react-contenteditable';
-import { Word } from '../components/Word/Word';
-import { fb } from '../utils/firebase';
+import { Word } from '../../components/Word/Word';
+import { fb } from '../../utils/firebase';
 
 
 function Document() {
