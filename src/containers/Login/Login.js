@@ -3,7 +3,7 @@ import { Button, TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { fb } from '../../utils/firebase';
 
-const Register = () => {
+const Login = () => {
   const classes = useStyles();
   const [ error, setError ] = React.useState(null);
 
@@ -11,26 +11,12 @@ const Register = () => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const passwordConfirmation = event.target.passwordConfirmation.value;
-    const fullname = event.target.fullname.value;
-
-    if(password === passwordConfirmation){
-      fb.auth().createUserWithEmailAndPassword(email, password)
-        .then(function(info){
-          var user = fb.auth().currentUser;
-          let db = fb.firestore();
-          db.collection('users').doc(user.uid).set({
-            fullname: fullname,
-            email: email,
-          });
-        })
-        .catch(function(error) {
-          var errorMessage = error.message;
-          setError(errorMessage);
-        });
-    } else {
-      setError('Wrong password confirmation.');
-    }
+    
+    fb.auth().signInWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        var errorMessage = error.message;
+        setError(errorMessage);
+      });
   }
 
   return (<Grid container justify="center">
@@ -59,23 +45,6 @@ const Register = () => {
               margin="normal"
             />
 
-          <TextField
-              fullWidth
-              required
-              name="passwordConfirmation"
-              label="Confirm Password"
-              type="password"
-              margin="normal"
-            />
-
-          <TextField
-              fullWidth
-              required
-              name="fullname"
-              label="Fullname"
-              margin="normal"
-            />
-
           {error && <Typography>{error}</Typography>}
 
           <Button type="submit" color="primary" variant="contained">
@@ -97,4 +66,4 @@ const useStyles = makeStyles((theme) => {
   }
 });
 
-export default Register;
+export default Login;

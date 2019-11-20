@@ -3,12 +3,14 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import Document from '../Document/Document';
 import Register from '../Register/Register';
 import { makeStyles } from '@material-ui/core';
+import Login from '../Login/Login';
 
 function App() {
   const classes = useStyles();
   
   return (<Router>
 
+    <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/" exact component={Document} />
     
