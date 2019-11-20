@@ -4,9 +4,21 @@ import { makeStyles } from '@material-ui/styles';
 
 const Register = () => {
   const classes = useStyles();
+  const [ error, setError ] = React.useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const passwordConfirmation = event.target.passwordConfirmation.value;
+    const fullname = event.target.fullname.value;
+
+    if(password === passwordConfirmation){
+
+    } else {
+      setError('Wrong password confirmation.');
+    }
+    console.log(event.target.email.value);
   }
 
   return (<Grid container justify="center">
@@ -20,6 +32,7 @@ const Register = () => {
           <TextField
               fullWidth
               required
+              name="email"
               label="Email"
               type="email"
               margin="normal"
@@ -28,6 +41,7 @@ const Register = () => {
           <TextField
               fullWidth
               required
+              name="password"
               label="Password"
               type="password"
               margin="normal"
@@ -36,6 +50,7 @@ const Register = () => {
           <TextField
               fullWidth
               required
+              name="passwordConfirmation"
               label="Confirm Password"
               type="password"
               margin="normal"
@@ -44,9 +59,12 @@ const Register = () => {
           <TextField
               fullWidth
               required
+              name="fullname"
               label="Fullname"
               margin="normal"
             />
+
+          {error && <Typography>{error}</Typography>}
 
           <Button type="submit" color="primary" variant="contained">
             Register
