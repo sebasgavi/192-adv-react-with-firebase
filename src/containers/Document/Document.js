@@ -97,20 +97,7 @@ function Document() {
 
 const useStyles = makeStyles((theme) => {
   return {
-    '@global': {
-      body: {
-        margin: 0,
-      },
-      '*': {
-        boxSizing: 'border-box',
-      },
-      p: {
-        fontFamily: 'sans-serif',
-        margin: 0,
-      },
-    },
     root: {
-      backgroundColor: 'lightgray',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
