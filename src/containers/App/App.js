@@ -4,16 +4,31 @@ import Document from '../Document/Document';
 import Register from '../Register/Register';
 import { makeStyles } from '@material-ui/core';
 import Login from '../Login/Login';
+import { fb } from '../../utils/firebase';
 
 function App() {
   const classes = useStyles();
+
+  const [ user, setUser ] = React.useState(null);
+
+  React.useEffect(() => {
+    return fb.auth().onAuthStateChanged(function(user) {
+      setUser(user);
+      console.log(user);
+
+      if(user){
+        let db = fb.firestore();
+        let doc = db.collection('titles').doc('LA');
+      }
+    });
+  }, []);
   
   return (<Router>
 
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/" exact component={Document} />
-    
+  
   </Router>);
 }
 

@@ -23,7 +23,7 @@ const Login = () => {
 
     <Grid item md={6}>
       <Paper className={classes.root}>
-        <Typography variant="h3">Register form</Typography>
+        <Typography variant="h3">Log in form</Typography>
 
         <form onSubmit={handleSubmit}>
 
@@ -48,7 +48,7 @@ const Login = () => {
           {error && <Typography>{error}</Typography>}
 
           <Button type="submit" color="primary" variant="contained">
-            Register
+            Log in
           </Button>
         </form>
       </Paper>
