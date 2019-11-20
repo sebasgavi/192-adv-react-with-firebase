@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { fb } from '../../utils/firebase';
+import { Redirect } from 'react-router-dom';
 
-const Register = () => {
+const Register = (props) => {
   const classes = useStyles();
   const [ error, setError ] = React.useState(null);
 
@@ -31,6 +32,10 @@ const Register = () => {
     } else {
       setError('Wrong password confirmation.');
     }
+  }
+
+  if(props.user) {
+    return <Redirect to="/" />
   }
 
   return (<Grid container justify="center">

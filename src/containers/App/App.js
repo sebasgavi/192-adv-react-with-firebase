@@ -28,12 +28,10 @@ function App() {
   
   return (<Router>
 
-    <Route path="/login" component={Login} />
-    <Route path="/register" component={Register} />
+    <Route path="/login" render={() => <Login user={user} />} />
+    <Route path="/register" render={() => <Register user={user} />} />
     <Route path="/" exact component={Document} />
 
-    {user && user.fullname}
-  
   </Router>);
 }
 

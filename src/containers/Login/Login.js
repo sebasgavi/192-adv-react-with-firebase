@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { fb } from '../../utils/firebase';
+import { Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
   const [ error, setError ] = React.useState(null);
 
@@ -17,6 +18,10 @@ const Login = () => {
         var errorMessage = error.message;
         setError(errorMessage);
       });
+  }
+
+  if(props.user) {
+    return <Redirect to="/" />
   }
 
   return (<Grid container justify="center">
