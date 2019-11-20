@@ -13,12 +13,15 @@ function App() {
 
   React.useEffect(() => {
     return fb.auth().onAuthStateChanged(function(user) {
-      setUser(user);
-      console.log(user);
-
       if(user){
         let db = fb.firestore();
-        let doc = db.collection('titles').doc('LA');
+        db.collection('users').doc(user.uid).get()
+          .then((doc) => {
+            setUser({
+              ...doc.data(),
+              uid: user.uid,
+            });
+          });
       }
     });
   }, []);
@@ -28,6 +31,8 @@ function App() {
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/" exact component={Document} />
+
+    {user && user.fullname}
   
   </Router>);
 }
