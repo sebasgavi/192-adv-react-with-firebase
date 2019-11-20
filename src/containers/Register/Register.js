@@ -7,6 +7,8 @@ const Register = () => {
   const classes = useStyles();
   const [ error, setError ] = React.useState(null);
 
+  var user = fb.auth().currentUser;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -17,7 +19,12 @@ const Register = () => {
     if(password === passwordConfirmation){
       fb.auth().createUserWithEmailAndPassword(email, password)
         .then(function(info){
-          console.log(info)
+          var user = fb.auth().currentUser;
+          let db = fb.firestore();
+          db.collection('users').doc(user.uid).set({
+            fullname: fullname,
+            email: email,
+          });
         })
         .catch(function(error) {
           var errorMessage = error.message;
@@ -26,7 +33,6 @@ const Register = () => {
     } else {
       setError('Wrong password confirmation.');
     }
-    console.log(event.target.email.value);
   }
 
   return (<Grid container justify="center">
