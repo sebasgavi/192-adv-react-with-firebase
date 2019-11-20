@@ -22,6 +22,8 @@ function App() {
               uid: user.uid,
             });
           });
+      } else {
+        setUser(null);
       }
     });
   }, []);
@@ -30,7 +32,7 @@ function App() {
 
     <Route path="/login" render={() => <Login user={user} />} />
     <Route path="/register" render={() => <Register user={user} />} />
-    <Route path="/" exact component={Document} />
+    <Route path="/" exact render={() => <Document user={user} />} />
 
   </Router>);
 }

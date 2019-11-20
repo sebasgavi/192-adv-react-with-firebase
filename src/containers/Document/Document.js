@@ -1,13 +1,13 @@
 import React from 'react';
-import { Paper, Fab } from '@material-ui/core';
+import { Paper, Fab, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { EditRounded as EditIcon, RemoveRedEyeRounded as EyeIcon } from '@material-ui/icons';
 import ContentEditable from 'react-contenteditable';
 import { Word } from '../../components/Word/Word';
 import { fb } from '../../utils/firebase';
+import { Redirect } from 'react-router-dom';
 
-
-function Document() {
+function Document({ user }) {
   const [ isEditable, setEditable ] = React.useState(true);
   const [ title, setTitle ] = React.useState('');
   const [ text, setText ] = React.useState('');
@@ -60,7 +60,23 @@ function Document() {
     setText(event.target.value);
   }
 
-  return (
+  const handleLogout = () => {
+    fb.auth().signOut();
+  }
+
+  if(!user){
+    return <Redirect to="/login" />;
+  }
+
+  return (<>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6">
+          Hello {user.fullname}
+        </Typography>
+        <Button color="inherit" className={classes.logoutBtn} onClick={handleLogout}>Logout</Button>
+      </Toolbar>
+    </AppBar>
     <div className={classes.root}>
       <div className={classes.container}>
 
@@ -92,7 +108,7 @@ function Document() {
         {isEditable ? <EyeIcon /> : <EditIcon />}
       </Fab>
     </div>
-  );
+  </>);
 }
 
 const useStyles = makeStyles((theme) => {
@@ -131,6 +147,9 @@ const useStyles = makeStyles((theme) => {
       position: 'fixed',
       right: 40,
       bottom: 40,
+    },
+    logoutBtn: {
+      marginLeft: 'auto',
     },
   }
 });
